@@ -8,6 +8,11 @@ class OrderableInlineMixin(object):
             'js/orderable-inline-jquery-ui.js',
             'js/orderable-inline.js',
         )
+        css = {
+            'all': [
+                'css/orderable-inline.css'
+            ]
+        }
 
     def get_fieldsets(self, request, obj=None):
         if self.declared_fieldsets:

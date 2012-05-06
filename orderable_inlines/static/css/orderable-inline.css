@@ -1,0 +1,3 @@
+div.orderable-stacked-inline-group div.inline-related, fieldset.orderable-tabular tr.form-row {
+    cursor: move;
+}
