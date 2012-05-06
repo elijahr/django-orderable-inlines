@@ -22,10 +22,8 @@ Example
 # models.py
 from django.db import models
 
-
 class Gallery(models.Model):
     name = models.CharField(max_length=16)
-
 
 class Photo(models.Model):
     gallery = models.ForeignKey(Gallery)
@@ -40,11 +38,9 @@ from django.contrib import admin
 from gallery.models import Gallery, Photo
 from orderable_inlines import OrderableTabularInline
 
-
 class PhotoInline(OrderableTabularInline):
     model = Book
-    order_field = 'order'
-
+    orderable_field = 'order'
 
 class GalleryAdmin(admin.ModelAdmin):
     inlines = [

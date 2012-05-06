@@ -22,7 +22,7 @@ class OrderableInlineMixin(object):
         return [
             (None, {
                 'fields': fields,
-                'classes': self.fieldset_css_classes + ['orderable-field-%s' % self.order_field]
+                'classes': self.fieldset_css_classes + ['orderable-field-%s' % self.orderable_field]
             })
         ]
 
