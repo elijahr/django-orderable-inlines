@@ -22,15 +22,14 @@ class OrderableInlineMixin(object):
         return [
             (None, {
                 'fields': fields,
-                'classes': '%s orderable-field-%s' % (
-                    self.fieldset_css_classes,
-                    self.order_field
-                )
+                'classes': self.fieldset_css_classes + ['orderable-field-%s' % self.order_field]
             })
         ]
 
-class OrderableStackedInline(StackedInline, OrderableInlineMixin):
-    fieldset_css_classes = 'orderable-stacked'
+class OrderableStackedInline(OrderableInlineMixin, StackedInline):
+    fieldset_css_classes = ['orderable-stacked']
 
-class OrderableTabularInline(TabularInline, OrderableInlineMixin):
-    fieldset_css_classes = 'orderable-tabular'
+class OrderableTabularInline(OrderableInlineMixin, TabularInline):
+    fieldset_css_classes = ['orderable-tabular']
+    template = 'orderable_inlines/edit_inline/tabular.html'
+
