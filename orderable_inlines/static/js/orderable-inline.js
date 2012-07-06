@@ -20,9 +20,15 @@
             var $inputs;
             $inputs = $inlineGroup.find('.field-'+orderableFieldName+' input');
             $inputs.each(function(i){
-                var $input;
+                var $input, originalData, newData;
                 $input = $(this);
-                $input.val(i+1);
+                // only update the ordering if this item is 1) a non new item
+                // or if 2) it is new but its values have changed
+                originalData = $input.data('original-data');
+                newData = $('<form />').append($input.closest('tr').clone()).serialize();
+                if ((!originalData) || (originalData != newData)) {
+                    $input.val(i+1);
+                }
             });
         };
         $inlineGroup.sortable({
@@ -51,11 +57,20 @@
             var $inputs;
             $inputs = $fieldset.find('.field-'+orderableFieldName+' input');
             $inputs.each(function(i){
-                var $input, $tr;
+                var $input, $tr, originalData;
                 $input = $(this);
-                $input.val(i+1);
-                // fix the zebra stripes
                 $tr = $input.closest('tr');
+                // if this is just an 'extra' input, don't change the order
+                // but keep track of what the original row values were so we
+                // can tell if they have changed
+                if ($tr.find('td.delete input').length) {
+                    $input.val(i+1);
+                } else {
+                    $input.addClass('new-row');
+                    originalData = $('<form />').append($tr.clone()).serialize();
+                    $input.data('original-data', originalData);
+                }
+                // fix the zebra stripes
                 $tr.removeClass('row1 row1');
                 $tr.addClass('row'+((i%2)+1));
             });
