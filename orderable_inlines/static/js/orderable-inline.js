@@ -20,15 +20,22 @@
             var $inputs;
             $inputs = $inlineGroup.find('.field-'+orderableFieldName+' input');
             $inputs.each(function(i){
-                var $input, originalData, newData;
+                var $input, $inlineRelated, originalData, newData;
                 $input = $(this);
-                // only update the ordering if this item is 1) a non new item
-                // or if 2) it is new but its values have changed
+                $inlineRelated = $input.closest('.inline-related');
+                newData = $('<form />').append($inlineRelated.clone()).serialize();
                 originalData = $input.data('original-data');
-                newData = $('<form />').append($input.closest('tr').clone()).serialize();
-                if ((!originalData) || (originalData != newData)) {
+                if (!originalData) {
+                    originalData = newData;
+                    $input.data('original-data', originalData);
+                }
+
+                // only update the order if this a new row that has been modified
+                // or if its an existing row
+                if ($inlineRelated.find('span.delete input').length || (originalData != newData)){
                     $input.val(i+1);
                 }
+
             });
         };
         $inlineGroup.sortable({
@@ -57,19 +64,23 @@
             var $inputs;
             $inputs = $fieldset.find('.field-'+orderableFieldName+' input');
             $inputs.each(function(i){
-                var $input, $tr, originalData;
+                var $input, $tr, originalData, newData;
                 $input = $(this);
                 $tr = $input.closest('tr');
-                // if this is just an 'extra' input, don't change the order
-                // but keep track of what the original row values were so we
-                // can tell if they have changed
-                if ($tr.find('td.delete input').length) {
-                    $input.val(i+1);
-                } else {
-                    $input.addClass('new-row');
-                    originalData = $('<form />').append($tr.clone()).serialize();
+
+                newData = $('<form />').append($tr.clone()).serialize();
+                originalData = $input.data('original-data');
+                if (!originalData) {
+                    originalData = newData;
                     $input.data('original-data', originalData);
                 }
+
+                // only update the order if this a new row that has been modified
+                // or if its an existing row
+                if ($tr.find('td.delete input').length || (originalData != newData)){
+                    $input.val(i+1);
+                }
+
                 // fix the zebra stripes
                 $tr.removeClass('row1 row1');
                 $tr.addClass('row'+((i%2)+1));
@@ -91,4 +102,4 @@
         $('fieldset.orderable-tabular tbody').each(setupTabularTBody);
     });
 
-})(window.jQuery || django.jQuery);
+})(django.jQuery);

@@ -11,7 +11,7 @@ with open('LICENSE') as f:
 
 setup(
     name='django-orderable-inlines',
-    version='0.0.5',
+    version='0.0.6',
     description='Drag-to-reorder inline model admins for Django',
     long_description=readme,
     author='Elijah Rutschman',

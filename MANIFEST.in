@@ -1,2 +1,5 @@
 include README.rst
 include LICENSE
+recursive-include orderable_inlines/static/css *.css
+recursive-include orderable_inlines/static/js *.js
+recursive-include orderable_inlines/templates/orderable_inlines/edit_inline *.html
