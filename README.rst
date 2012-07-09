@@ -1,4 +1,3 @@
-
 django-orderable-inlines
 ========================
 
@@ -36,7 +35,7 @@ Example
     from orderable_inlines import OrderableTabularInline
 
     class PhotoInline(OrderableTabularInline):
-        model = Book
+        model = Photo
         orderable_field = 'order'
 
     class GalleryAdmin(admin.ModelAdmin):
