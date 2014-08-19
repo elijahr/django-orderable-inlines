@@ -2318,4 +2318,4 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 
 
-})(django.jQuery));
+}));
