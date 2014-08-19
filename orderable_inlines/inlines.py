@@ -14,18 +14,6 @@ class OrderableInlineMixin(object):
             ]
         }
 
-    def get_fieldsets2(self, request, obj=None):
-        if self.declared_fieldsets:
-            return self.declared_fieldsets
-        form = self.get_formset(request, obj).form
-        fields = form.base_fields.keys() + list(self.get_readonly_fields(request, obj))
-        return [
-            (None, {
-                'fields': fields,
-                'classes': self.fieldset_css_classes + ['orderable-field-%s' % self.orderable_field]
-            })
-        ]
-
     def get_fieldsets(self, request, obj=None):
         if self.declared_fieldsets:
             return self.declared_fieldsets
